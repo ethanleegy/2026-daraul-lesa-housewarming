@@ -1,0 +1,121 @@
+# ==========================================================================
+#  EVENT DATA FILE — the only file that should change for a normal client.
+#  Everything on the public site (copy, colours, images, features, API URLs)
+#  is read from here. Validate with:  ruby scripts/check_event.rb
+#
+#  Daraul & Lesa's housewarming. Date, venue and dress code are still
+#  placeholders until the hosts confirm them.
+#  HTML is allowed in fields ending in _html. All other fields are plain text.
+#  Images are file names inside assets/images/.
+# ==========================================================================
+
+# --- Identity -------------------------------------------------------------
+id: daraul-lesa-housewarming-2026   # slug, lowercase-hyphenated; exposed to JS as IVORY.eventId
+type: social                     # wedding | birthday | social | corporate | other
+name: Daraul & Lesa’s Housewarming
+host:
+  name: Daraul & Lesa
+  short_name: DARAUL & LESA
+  # logo: your-logo.png          # optional; shown on the thank-you page
+
+# --- Site / sharing -------------------------------------------------------
+site:
+  url: https://daraul-lesa-housewarming.ivory-gy.com   # TODO: confirm production URL, no trailing slash
+  description: "Daraul & Lesa are inviting you to their housewarming. Come celebrate their new home with good food and good company."
+  share_image: share-housewarming.png  # 1200x630, used by WhatsApp/Facebook previews
+  # favicon: favicon.ico
+  # favicon_png: favicon-16x16.png
+  lang: en
+
+# --- When -----------------------------------------------------------------
+datetime: 2026-12-13T18:00:00-04:00   # placeholder — ISO 8601 with offset
+
+# --- Look -----------------------------------------------------------------
+# Colours become CSS variables, so Tailwind classes like bg-primary,
+# text-accent or border-line pick them up with no CSS edits.
+# Blue-green palette drawn from the watercolour house in the hero image.
+theme:
+  colors:
+    ink: "#1d3335"            # body text
+    paper: "#f1f7f5"          # light page background (sea-glass)
+    muted: "#5b7775"          # secondary text
+    line: "#d3e6e1"           # dividers on light backgrounds
+    field: "#a6cbc3"          # input and button borders
+    primary: "#235c62"        # main dark brand colour (buttons, dark sections)
+    primary-deep: "#173f45"   # footer / darkest surface
+    hero: "#235c62"           # hero fallback behind the image
+    accent: "#e1c114"         # labels, icons, focus rings, hero button
+    highlight: "#8fd0c2"      # sea-green highlight on dark backgrounds
+    highlight-soft: "#bfe5dc" # softer highlight, submit button
+    on-dark: "#f4fbf9"        # text on dark backgrounds
+  fonts:
+    sans: '"Avenir Next", Avenir, "Segoe UI", sans-serif'
+    display: '"Iowan Old Style", "Baskerville", "Palatino Linotype", "Book Antiqua", Georgia, serif'
+    google_fonts_url: ""      # optional stylesheet URL if the fonts above come from Google Fonts
+
+# --- Features -------------------------------------------------------------
+features:
+  rsvp: form            # one required field (name) + submit, no attendance question or plus-one
+  plus_one: false
+  contributions: false
+  gallery: false
+  countdown: false
+  ivory_credit: true    # "Have an event of your own?" footer link
+
+# --- Page order -----------------------------------------------------------
+sections:
+  - hero
+  - invitation
+  - footer
+
+# --- Section copy ---------------------------------------------------------
+hero:
+  style: centered
+  image: housewarming_bluegreen.png
+  image_shape: landscape
+  image_alt: Watercolour drawing of a two-storey wooden house with wraparound verandas, palm trees and a picket fence
+  image_position: center
+  title_html: 'Housewarming<br><span class="hero-shine">Party</span>'
+  cta: You’re invited
+  show_cta: true          # centered hero: also show the scroll-down button
+
+invitation:
+  eyebrow: HELLO THERE
+  greeting_html: 'Daraul & Lesa<br>are inviting <span class="text-accent italic">You</span>'
+  body: to their housewarming ceremony. Come help us bless our new home and celebrate with good food, warm company and plenty of laughter.
+  details:                        # icons: calendar, pin, shirt, clock, gift
+    - icon: calendar
+      label: When
+      title_html: Saturday, Month Day, Year
+      subtitle: Celebration begins at 6:00 PM
+    - icon: pin
+      label: Where
+      title_html: Street Address,<br>Neighbourhood
+      subtitle: City, Country
+    - icon: shirt
+      label: What to wear
+      title_html: Dress Code
+      subtitle: Details to come
+
+rsvp:
+  question: Will you be joining us?
+  subtext: Just let us know your name.
+  submit_label: Submit response
+  fields:
+    - name: name
+      label: Your name
+      type: text
+      required: true
+      autocomplete: name
+      placeholder: Enter your full name
+
+thank_you:
+  title: Thank you!
+  subtitle: See you at the new place!
+
+# --- Backend --------------------------------------------------------------
+# Paths are relative to api_base. Leave a path empty if the backend lacks it.
+backend:
+  api_base: https://us-central1-daraul-lesa-housewarming-2026.cloudfunctions.net/api/v1/   # TODO: confirm once the Firebase project exists
+  endpoints:
+    submissions: submissions                     # form RSVP       POST { name, requestId }

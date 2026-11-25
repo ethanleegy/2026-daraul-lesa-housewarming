@@ -1,0 +1,29 @@
+{%- comment -%}
+  Alternating photo + caption timeline from event.story.
+  event.story is either { eyebrow, title_html, moments: [...] } or, for older
+  sites, just the list of moments. Each moment: { year, image, alt, text }.
+{%- endcomment -%}
+{%- assign story = site.data.event.story -%}
+{%- assign moments = story.moments | default: story -%}
+{%- if moments and moments.size > 0 -%}
+<section class="show-page relative isolate overflow-hidden bg-paper px-6 py-24 max-md:px-[22px]" {% if story.title_html %}aria-labelledby="story-title"{% else %}aria-label="Our story"{% endif %} hidden>
+  {% include pattern.html %}
+  {% if story.eyebrow or story.title_html %}
+  <header class="relative z-10 mx-auto mb-20 max-w-[760px] text-center">
+    {% if story.eyebrow %}<p class="mb-[19px] text-[10px] leading-[1.5] font-bold tracking-[.22em] text-accent uppercase">{{ story.eyebrow }}</p>{% endif %}
+    {% if story.title_html %}<h2 id="story-title" data-scroll-reveal="up" class="m-0 font-display text-[clamp(45px,7vw,76px)] leading-none font-normal tracking-[-.055em]">{{ story.title_html }}</h2>{% endif %}
+  </header>
+  {% endif %}
+  <div class="relative z-10 mx-auto grid w-full max-w-[990px] gap-20">
+    {% for s in moments %}
+    <div data-scroll-reveal="up" class="grid items-center gap-8 md:grid-cols-2">
+      <img class="w-full shadow-xl {% cycle '', 'md:order-2' %}" src="{{ '/assets/images/' | append: s.image | relative_url }}" alt="{{ s.alt | default: '' | escape }}" loading="lazy">
+      <div class="text-center md:text-left">
+        {% if s.year %}<p class="m-0 font-display text-[clamp(40px,6vw,64px)] leading-none tracking-[-.05em] text-primary">{{ s.year }}</p>{% endif %}
+        {% if s.text %}<p class="mt-4 font-display text-lg leading-[1.7] text-muted">{{ s.text }}</p>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{%- endif -%}

@@ -1,0 +1,36 @@
+{%- comment -%}
+  hero.style: split — text on the left over the solid `hero` colour,
+  hero.image filling the right. On phones the image sits on top.
+  hero.image_shape: landscape (default) | portrait. Portrait gives the photo
+  a narrower column on desktop and a taller 4:5 panel on phones, so a
+  tall photo isn't cropped hard.
+{%- endcomment -%}
+{%- assign h = site.data.event.hero -%}
+{%- if h.image_shape == 'portrait' -%}
+  {%- assign grid_cols = 'md:grid-cols-[3fr_2fr]' -%}
+  {%- assign image_box = 'aspect-[4/5] max-h-[82svh] w-full md:aspect-auto md:max-h-none' -%}
+{%- else -%}
+  {%- assign grid_cols = 'md:grid-cols-2' -%}
+  {%- assign image_box = 'h-[min(58svh,520px)]' -%}
+{%- endif -%}
+<section class="relative grid overflow-hidden bg-hero text-on-dark md:min-h-[min(810px,94svh)] {{ grid_cols }}" aria-labelledby="hero-title">
+  {% include hero/top-bar.html %}
+
+  <div class="relative z-10 flex flex-col items-start justify-center px-[clamp(25px,6vw,88px)] pt-12 pb-[90px] md:pt-[120px] md:pb-[110px]">
+    {% include hero/title.html size="half" %}
+  </div>
+
+  <div class="relative order-first {{ image_box }} md:order-none md:h-auto">
+    {% if h.image %}
+    <img
+      class="absolute inset-0 size-full object-cover"
+      style="object-position: {{ h.image_position | default: 'center' }}"
+      src="{{ '/assets/images/' | append: h.image | relative_url }}"
+      alt="{{ h.image_alt | escape }}"
+      fetchpriority="high"
+    >
+    {% endif %}
+    {%- comment -%} Keeps the top bar readable over the photo. {%- endcomment -%}
+    <div class="hero-split-shade pointer-events-none absolute inset-0"></div>
+  </div>
+</section>

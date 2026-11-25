@@ -1,0 +1,16 @@
+{
+  "name": "ivory-event-template",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ivory Invites public event site template (Jekyll + Tailwind)",
+  "scripts": {
+    "check": "ruby scripts/check_event.rb",
+    "css:watch": "tailwindcss -i ./src/tailwind.css -o ./assets/css/tailwind.css --watch",
+    "css:build": "tailwindcss -i ./src/tailwind.css -o ./assets/css/tailwind.css --minify",
+    "build": "npm run check && npm run css:build && bundle exec jekyll build"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

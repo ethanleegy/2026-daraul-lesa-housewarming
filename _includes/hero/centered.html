@@ -1,0 +1,37 @@
+{%- comment -%}
+  hero.style: centered — full-screen white hero for white-background art
+  (floral frames, line drawings…) with just the title in the middle, in dark
+  ink. No overlay, eyebrow or subtitle; the call-to-action shows only when
+  hero.show_cta is true.
+  hero.image_shape: landscape (default) fills the screen, cropping as needed.
+  portrait shows the whole image at full height; the white around it blends
+  into the image's own white background.
+  The section carries `hero-light` so event.css can adjust title flourishes
+  (e.g. gold text) for a white background.
+{%- endcomment -%}
+{%- assign h = site.data.event.hero -%}
+<section class="hero-light relative grid min-h-svh place-items-center overflow-hidden bg-white text-ink" aria-labelledby="hero-title">
+  {% if h.image %}
+  <img
+    class="absolute inset-0 size-full {% if h.image_shape == 'portrait' %}object-contain{% else %}object-cover{% endif %}"
+    style="object-position: {{ h.image_position | default: 'center' }}"
+    src="{{ '/assets/images/' | append: h.image | relative_url }}"
+    alt="{{ h.image_alt | escape }}"
+    fetchpriority="high"
+  >
+  {% endif %}
+
+  {% include hero/top-bar.html tone="light" %}
+
+  <div class="relative z-10 mx-auto w-full max-w-[1100px] px-[8vw] py-[120px] text-center max-md:px-[25px]">
+    {%- comment -%} Portrait: font and width are both tied to the shown image's
+        width (min of 100vw and 75svh) so the title wraps inside the frame. {%- endcomment -%}
+    {%- if h.image_shape == 'portrait' %}
+    <div class="mx-auto max-w-[min(52vw,39svh)]">
+      {% include hero/title.html size="framed" only="title" cta=h.show_cta %}
+    </div>
+    {%- else %}
+    {% include hero/title.html size="full" only="title" cta=h.show_cta %}
+    {%- endif %}
+  </div>
+</section>

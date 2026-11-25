@@ -1,0 +1,55 @@
+---
+layout: default
+title: Gallery
+permalink: /gallery/
+uses_gallery: true
+---
+{%- assign e = site.data.event -%}
+{%- assign g = e.gallery -%}
+{%- if e.features.gallery -%}
+<main>
+  <section class="gallery-hero relative overflow-hidden bg-hero text-on-dark" aria-labelledby="gallery-title">
+    <header class="relative z-10 flex items-center justify-between gap-6 px-[clamp(22px,6vw,88px)] py-7 max-md:px-[22px] max-md:py-[23px]">
+      <a class="inline-flex items-center gap-3 text-[11px] font-semibold tracking-[.14em] text-on-dark uppercase max-md:gap-2 max-md:text-[9px]" href="{{ '/' | relative_url }}" data-keep-token>
+        {% if e.site.favicon_png %}<img class="size-4" src="{{ '/assets/images/' | append: e.site.favicon_png | relative_url }}" alt="" aria-hidden="true">{% endif %}
+        <span>{{ e.host.name }}</span>
+      </a>
+      <div class="flex shrink-0 items-center gap-6">
+        {% if g.upload_url %}<a class="inline-flex items-center gap-[9px] border-b border-on-dark/55 pb-[5px] text-[10px] font-semibold tracking-[.14em] text-on-dark uppercase max-md:text-[9px]" href="{{ g.upload_url | relative_url }}">Share photos <span aria-hidden="true">↑</span></a>{% endif %}
+        <a class="inline-flex items-center gap-[9px] border-b border-on-dark/55 pb-[5px] text-[10px] font-semibold tracking-[.14em] text-on-dark uppercase max-md:text-[9px]" href="{{ '/' | relative_url }}" data-keep-token>Invitation <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+    <div class="relative z-10 mx-auto w-full max-w-[1240px] px-[8vw] pt-[74px] pb-[88px] max-md:px-[25px] max-md:pt-[50px] max-md:pb-[62px]">
+      {% if g.eyebrow %}<p class="mb-6 text-[10px] leading-[1.5] font-bold tracking-[.22em] text-highlight-soft uppercase">{{ g.eyebrow }}</p>{% endif %}
+      <h1 id="gallery-title" class="m-0 font-display text-[clamp(58px,9vw,112px)] leading-[.9] font-normal tracking-[-.075em]">{{ g.title_html | default: e.name }}</h1>
+      {% if g.body %}<p class="mt-7 max-w-[470px] font-display text-lg leading-[1.7] text-on-dark/75">{{ g.body }}</p>{% endif %}
+    </div>
+  </section>
+
+  <section class="min-h-[55vh] bg-paper px-6 py-[72px] max-md:px-[22px] max-md:py-[48px]" aria-labelledby="photos-title">
+    <div class="mx-auto w-full max-w-[1100px]">
+      <div class="mb-7 flex items-end justify-between gap-5 max-[480px]:flex-col max-[480px]:items-start">
+        <div>
+          {% if g.grid_eyebrow %}<p class="mb-3 text-[10px] font-bold tracking-[.22em] text-accent uppercase">{{ g.grid_eyebrow }}</p>{% endif %}
+          <h2 id="photos-title" class="m-0 font-display text-[clamp(34px,5vw,52px)] leading-none font-normal tracking-[-.055em]">{{ g.grid_title | default: "Photos" }}</h2>
+        </div>
+        <button class="btn-outline" id="gallery-refresh" type="button">Refresh photos <span aria-hidden="true">↻</span></button>
+      </div>
+      <p class="mb-5 min-h-6 text-[13px] leading-[1.5] text-muted" id="gallery-status" role="status" aria-live="polite">Loading photos…</p>
+      <div id="gallery-grid" class="gallery-masonry"></div>
+      <button class="mx-auto mt-8 inline-flex min-h-12 items-center gap-5 bg-primary px-5 text-[10px] font-bold tracking-[.1em] text-on-dark uppercase transition-colors hover:bg-primary-deep focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent disabled:cursor-wait disabled:opacity-60" id="gallery-more" type="button" hidden>Load more photos <span aria-hidden="true">↓</span></button>
+    </div>
+  </section>
+
+  <dialog class="w-[min(94vw,1100px)] max-w-none border border-line bg-paper p-3 shadow-2xl backdrop:bg-primary-deep/90 max-md:p-2" id="photo-viewer" aria-label="Selected gallery photo">
+    <div class="flex justify-end">
+      <button class="btn-outline min-h-10" id="gallery-close" type="button">Close <span aria-hidden="true">×</span></button>
+    </div>
+    <img class="mx-auto mt-2 max-h-[78vh] max-w-full object-contain" id="photo-viewer-image" alt="A photo from {{ e.name | escape }}">
+  </dialog>
+</main>
+{%- else -%}
+<main class="flex min-h-screen items-center justify-center bg-paper px-6 text-center">
+  <p class="font-display text-lg text-muted">There’s no gallery for this event. <a class="text-accent underline" href="{{ '/' | relative_url }}">Back to the invitation</a></p>
+</main>
+{%- endif -%}

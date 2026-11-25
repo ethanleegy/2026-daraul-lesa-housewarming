@@ -1,0 +1,9 @@
+{%- comment -%}
+  Picks the hero layout from hero.style in _data/event.yml.
+  Available: classic (default), split, polaroid, centered — see _includes/hero/.
+  To add one, create _includes/hero/<name>.html and use the shared
+  hero/top-bar.html and hero/title.html includes.
+{%- endcomment -%}
+{%- assign hero_style = site.data.event.hero.style | default: 'classic' -%}
+{%- assign hero_file = 'hero/' | append: hero_style | append: '.html' -%}
+{% include {{ hero_file }} %}

@@ -1,0 +1,23 @@
+{%- comment -%}
+  hero.style: classic (default) — full-bleed background (hero.image, or the
+  solid `hero` colour when there's no image) with the title left-aligned.
+{%- endcomment -%}
+{%- assign h = site.data.event.hero -%}
+<section class="relative min-h-[min(810px,94svh)] overflow-hidden bg-hero text-on-dark max-md:min-h-[min(760px,92svh)]" aria-labelledby="hero-title">
+  {% if h.image %}
+  <img
+    class="absolute inset-0 size-full object-cover"
+    style="object-position: {{ h.image_position | default: 'center' }}"
+    src="{{ '/assets/images/' | append: h.image | relative_url }}"
+    alt="{{ h.image_alt | escape }}"
+    fetchpriority="high"
+  >
+  {% endif %}
+  <div class="hero-overlay pointer-events-none absolute inset-0"></div>
+
+  {% include hero/top-bar.html %}
+
+  <div class="relative z-10 mx-auto flex min-h-[min(810px,94svh)] max-w-[1240px] flex-col items-start justify-center px-[8vw] pt-[120px] pb-[110px] max-md:min-h-[min(760px,92svh)] max-md:px-[25px] max-md:pt-[125px] max-md:pb-[105px]">
+    {% include hero/title.html size="full" %}
+  </div>
+</section>

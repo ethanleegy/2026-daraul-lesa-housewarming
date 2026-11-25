@@ -1,0 +1,28 @@
+# Jekyll settings shared by every Ivory event.
+# Event content lives in _data/event.yml — don't put client details here.
+
+title: Ivory event          # fallback only; pages use site.data.event.name
+baseurl: ""                 # keep empty for custom domains / user pages
+host: 0.0.0.0
+port: 3000
+
+markdown: kramdown
+
+# Backend source, tooling and private configuration must never enter _site.
+exclude:
+  - firebase
+  - cloudflare
+  - admin
+  - api-spec
+  - docs
+  - scripts
+  - src
+  - node_modules
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
+  - README.md
+  - CLAUDE.md
+  - "*.env"

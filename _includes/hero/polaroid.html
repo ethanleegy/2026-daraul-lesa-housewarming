@@ -1,0 +1,33 @@
+{%- comment -%}
+  hero.style: polaroid — two framed photos (hero.photos, usually bride and
+  groom) stacked in the centre like a little pile of polaroids: the first
+  photo sits in front, overlapping the second. Title below, on the solid
+  `hero` colour (no background image).
+  Each photo: { image, alt, caption (optional), position (optional) }.
+{%- endcomment -%}
+{%- assign h = site.data.event.hero -%}
+<section class="relative flex min-h-[min(860px,96svh)] flex-col overflow-hidden bg-hero text-on-dark" aria-labelledby="hero-title">
+  {% include hero/top-bar.html %}
+
+  <div class="relative z-10 mx-auto flex w-full max-w-[1240px] flex-1 flex-col justify-between px-[clamp(22px,6vw,88px)] pt-[110px] pb-[clamp(56px,8vw,100px)] max-md:pt-[95px]">
+    <div class="hero-photo-stack mx-auto grid place-items-center">
+      {%- for photo in h.photos limit: 2 %}
+      {%- if forloop.first -%}{%- assign layer = 'hero-photo-front' -%}{%- else -%}{%- assign layer = 'hero-photo-back' -%}{%- endif -%}
+      <figure class="hero-photo {{ layer }} col-start-1 row-start-1 m-0 w-[clamp(180px,54vw,240px)] md:w-[clamp(320px,33vw,450px)]">
+        <img
+          class="block aspect-[4/5] w-full object-cover"
+          style="object-position: {{ photo.position | default: 'center' }}"
+          src="{{ '/assets/images/' | append: photo.image | relative_url }}"
+          alt="{{ photo.alt | escape }}"
+          {% if forloop.first %}fetchpriority="high"{% endif %}
+        >
+        {% if photo.caption %}<figcaption class="pt-3 text-center font-display text-[clamp(15px,2vw,24px)] text-ink italic">{{ photo.caption }}</figcaption>{% endif %}
+      </figure>
+      {%- endfor %}
+    </div>
+
+    <div class="mt-12 max-w-[760px]">
+      {% include hero/title.html size="compact" %}
+    </div>
+  </div>
+</section>

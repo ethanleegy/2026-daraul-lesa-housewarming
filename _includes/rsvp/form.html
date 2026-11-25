@@ -1,0 +1,38 @@
+{%- comment -%}
+  Form RSVP: a custom list of fields from event.yml `rsvp.fields`
+  (text, email, tel, textarea, select). Posts every field to
+  backend.endpoints.submissions. Behaviour: assets/js/ivory.js (initFormRsvp).
+{%- endcomment -%}
+{%- assign r = site.data.event.rsvp -%}
+<form class="mx-auto max-w-[580px] text-center" id="rsvp" data-rsvp-mode="form" novalidate>
+  <fieldset class="min-w-0 p-0">
+    {% if r.question %}<legend class="w-full font-display text-[30px] tracking-[-.03em]">{{ r.question }}</legend>{% endif %}
+    {% if r.subtext %}<p class="mt-1 mb-[23px] font-display text-sm text-muted italic">{{ r.subtext }}</p>{% endif %}
+
+    <div class="mt-7 grid gap-8 text-left">
+      {% for f in r.fields %}
+      {%- assign field_id = 'field-' | append: f.name -%}
+      <label class="field-label" for="{{ field_id }}">
+        {{ f.label }}{% unless f.required %} <span class="text-[11px] font-normal tracking-normal text-muted normal-case">(optional)</span>{% endunless %}
+        {% case f.type %}
+        {% when 'select' %}
+        <select class="field-input" id="{{ field_id }}" name="{{ f.name }}"{% if f.required %} required{% endif %}>
+          <option value="" disabled selected>{{ f.placeholder | default: "Choose an option" }}</option>
+          {% for o in f.options %}
+          <option value="{{ o.value | default: o | escape }}">{{ o.label | default: o }}</option>
+          {% endfor %}
+        </select>
+        {% when 'textarea' %}
+        <textarea class="field-input min-h-28 py-3" id="{{ field_id }}" name="{{ f.name }}" maxlength="{{ f.maxlength | default: 1000 }}" placeholder="{{ f.placeholder | escape }}"{% if f.required %} required{% endif %}></textarea>
+        {% else %}
+        <input class="field-input" id="{{ field_id }}" name="{{ f.name }}" type="{{ f.type | default: 'text' }}" maxlength="{{ f.maxlength | default: 160 }}"{% if f.autocomplete %} autocomplete="{{ f.autocomplete }}"{% endif %}{% if f.inputmode %} inputmode="{{ f.inputmode }}"{% endif %} placeholder="{{ f.placeholder | escape }}"{% if f.required %} required{% endif %}>
+        {% endcase %}
+      </label>
+      {% endfor %}
+    </div>
+  </fieldset>
+
+  <p class="mt-4 min-h-6 text-[13px] leading-[1.5] text-primary" id="rsvp-message" aria-live="polite"></p>
+  <button class="btn-submit" id="submit" type="submit">{{ r.submit_label | default: "Submit" }} <span aria-hidden="true">↗</span></button>
+  {% if r.footnote %}<p class="mx-auto mt-2 max-w-[460px] text-[12px] leading-[1.6] text-muted">{{ r.footnote }}</p>{% endif %}
+</form>

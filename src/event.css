@@ -1,0 +1,55 @@
+/* Event-specific flourishes for Daraul & Lesa's housewarming.
+   Classes used here are referenced from _data/event.yml (hero.title_html etc.). */
+
+/* Animated sea-green text ("Party" in the hero title) */
+.hero-shine {
+  color: #2f7f86;
+  background-image: linear-gradient(110deg, #1a5a62 0%, #3c968c 22%, #164a54 42%, #2f8a82 56%, #1f6470 76%, #46a196 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* The gradient is only painted inside the box; extend it below the baseline
+     and past the sides so glyphs that overhang (the "y" in Party) aren't
+     clipped. The negative margin cancels the side padding so centring holds. */
+  padding: 0 .12em .22em;
+  margin-inline: -.12em;
+  animation: hero-shine 6s ease-in-out infinite;
+}
+@keyframes hero-shine {
+  0%, 15% { background-position: 100% 50%; }
+  70%, 100% { background-position: 0% 50%; }
+}
+
+/* The title sits over the busy watercolour house: a frosted white plate keeps
+   it readable while the drawing still shows through. */
+.hero-light #hero-title {
+  display: inline-block;
+  padding: .22em .4em .3em;
+  border-radius: 18px;
+  background: rgb(255 255 255 / .72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(1px);
+  box-shadow: 0 20px 50px -20px rgb(23 63 69 / .35);
+  font-size: clamp(44px, 8.8vw, 110px); /* a little under the template's full-size title */
+}
+/* "Housewarming" is long: keep the plate inside a phone screen. */
+@media (max-width: 640px) {
+  .hero-light #hero-title { font-size: 10vw; }
+}
+.hero-light .btn-hero {
+  display: flex;             /* own line under the title, still centred */
+  width: fit-content;
+  margin-inline: auto;
+  margin-top: clamp(28px, 4vw, 44px);
+  box-shadow: 0 10px 30px -8px rgb(23 63 69 / .45);
+}
+
+/* Tint the background pattern (if theme.pattern is set) sea-green on dark sections */
+.pattern-layer--dark {
+  filter: brightness(0) saturate(100%) invert(82%) sepia(18%) saturate(600%) hue-rotate(110deg) brightness(95%) contrast(88%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-shine { animation: none; }
+}

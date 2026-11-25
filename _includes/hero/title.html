@@ -1,0 +1,30 @@
+{%- comment -%}
+  Eyebrow, title, subtitle and call-to-action. Shared by every hero style so
+  the copy in event.yml looks the same whichever layout is chosen.
+  Params: size = "full" (default, whole-width hero) | "half" (split hero) | "compact" (polaroid hero) | "framed" (centered hero, portrait image)
+          only = "title" to show just the h1 (no eyebrow, subtitle or CTA)
+          cta = true to keep the call-to-action even with only="title"
+{%- endcomment -%}
+{%- assign e = site.data.event -%}
+{%- assign h = e.hero -%}
+{%- case include.size -%}
+  {%- when 'half' -%}{%- assign title_size = 'text-[clamp(52px,13vw,84px)] md:text-[clamp(56px,6.6vw,112px)]' -%}
+  {%- comment -%} Sized to a 3:4 portrait image shown whole at full height
+      (width = the smaller of 100vw and 75svh), so the title fits inside a
+      frame drawn in the image's middle half. {%- endcomment -%}
+  {%- when 'framed' -%}{%- assign title_size = 'text-[min(9.5vw,7svh)]' -%}
+  {%- when 'compact' -%}{%- assign title_size = 'text-[clamp(48px,10vw,120px)]' -%}
+  {%- else -%}{%- assign title_size = 'text-[clamp(54px,11vw,138px)]' -%}
+{%- endcase -%}
+{%- assign title_only = false -%}
+{%- if include.only == 'title' -%}{%- assign title_only = true -%}{%- endif -%}
+{% if h.eyebrow and title_only == false %}<p class="hero-shine mb-4 font-sans text-[25px] leading-[1.5] font-semibold tracking-[.2em] uppercase max-md:text-[13px]">{{ h.eyebrow }}</p>{% endif %}
+<h1 id="hero-title" class="m-0 font-display {{ title_size }} leading-[.78] font-normal tracking-[-.075em]">
+  {{ h.title_html | default: e.name }}
+</h1>
+{% if h.subtitle_html and title_only == false %}<p class="mt-8 mb-[30px] font-display text-[clamp(16px,2vw,21px)] tracking-[.02em]">{{ h.subtitle_html }}</p>{% endif %}
+{%- assign show_cta = true -%}
+{%- if title_only and include.cta != true -%}{%- assign show_cta = false -%}{%- endif -%}
+{% if h.cta and show_cta %}
+<a class="btn-hero show-page inline-flex items-center gap-14 rounded-lg border px-9 py-7 text-[20px] font-bold tracking-[.15em] uppercase focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent max-md:gap-4 max-md:px-5 max-md:py-5 max-md:text-xs" href="#invitation" data-smooth-scroll hidden>{{ h.cta }} <span aria-hidden="true">↓</span></a>
+{% endif %}
