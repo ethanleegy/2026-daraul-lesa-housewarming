@@ -2,7 +2,7 @@
 # Event content lives in _data/event.yml — don't put client details here.
 
 title: Ivory event          # fallback only; pages use site.data.event.name
-baseurl: ""                 # keep empty for custom domains / user pages
+baseurl: "/2026-daraul-lesa-housewarming"   # github.io project page; set back to "" if a custom domain is added
 host: 0.0.0.0
 port: 3000
 

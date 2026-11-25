@@ -20,7 +20,7 @@ host:
 
 # --- Site / sharing -------------------------------------------------------
 site:
-  url: https://daraul-lesa-housewarming.ivory-gy.com   # TODO: confirm production URL, no trailing slash
+  url: https://ethanleegy.github.io/2026-daraul-lesa-housewarming   # production URL incl. baseurl, no trailing slash
   description: "Daraul & Lesa are inviting you to their housewarming. Come celebrate their new home with good food and good company."
   share_image: share-housewarming.png  # 1200x630, used by WhatsApp/Facebook previews
   # favicon: favicon.ico
