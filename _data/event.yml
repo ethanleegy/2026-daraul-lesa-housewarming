@@ -3,25 +3,25 @@
 #  Everything on the public site (copy, colours, images, features, API URLs)
 #  is read from here. Validate with:  ruby scripts/check_event.rb
 #
-#  Daraul & Lesa's housewarming. Date, venue and dress code are still
+#  Daraul & Lisa's housewarming. Date, venue and dress code are still
 #  placeholders until the hosts confirm them.
 #  HTML is allowed in fields ending in _html. All other fields are plain text.
 #  Images are file names inside assets/images/.
 # ==========================================================================
 
 # --- Identity -------------------------------------------------------------
-id: daraul-lesa-housewarming-2026   # slug, lowercase-hyphenated; exposed to JS as IVORY.eventId
+id: daraul-lisa-housewarming-2026   # slug, lowercase-hyphenated; exposed to JS as IVORY.eventId
 type: social                     # wedding | birthday | social | corporate | other
-name: Daraul & Lesa’s Housewarming
+name: Daraul & Lisa’s Housewarming
 host:
-  name: Daraul & Lesa
-  short_name: DARAUL & LESA
+  name: Daraul & Lisa
+  short_name: DARAUL & LISA
   # logo: your-logo.png          # optional; shown on the thank-you page
 
 # --- Site / sharing -------------------------------------------------------
 site:
-  url: https://ethanleegy.github.io/2026-daraul-lesa-housewarming   # production URL incl. baseurl, no trailing slash
-  description: "Daraul & Lesa are inviting you to their housewarming. Come celebrate their new home with good food and good company."
+  url: https://ethanleegy.github.io/2026-daraul-lisa-housewarming   # production URL incl. baseurl, no trailing slash
+  description: "Daraul & Lisa are inviting you to their housewarming. Come celebrate their new home with good food and good company."
   share_image: share-housewarming.png  # 1200x630, used by WhatsApp/Facebook previews
   # favicon: favicon.ico
   # favicon_png: favicon-16x16.png
@@ -81,7 +81,7 @@ hero:
 
 invitation:
   eyebrow: HELLO THERE
-  greeting_html: 'Daraul & Lesa<br>are inviting <span class="text-accent italic">You</span>'
+  greeting_html: 'Daraul & Lisa<br>are inviting <span class="text-accent italic">You</span>'
   body: to their housewarming ceremony. Come help us bless our new home and celebrate with good food, warm company and plenty of laughter.
   details:                        # icons: calendar, pin, shirt, clock, gift
     - icon: calendar
@@ -116,6 +116,6 @@ thank_you:
 # --- Backend --------------------------------------------------------------
 # Paths are relative to api_base. Leave a path empty if the backend lacks it.
 backend:
-  api_base: https://us-central1-daraul-lesa-housewarming-2026.cloudfunctions.net/api/v1/   # TODO: confirm once the Firebase project exists
+  api_base: https://us-central1-daraul-lisa-housewarming-2026.cloudfunctions.net/api/v1/   # TODO: confirm once the Firebase project exists
   endpoints:
     submissions: submissions                     # form RSVP       POST { name, requestId }
